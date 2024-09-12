@@ -1,0 +1,56 @@
+/* Botón de tres puntos */
+.three-dots-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+  }
+  
+  /* Estilo del menú desplegable */
+  .dropdown-menu {
+    position: absolute;
+    top: 30px; /* Para que el menú se coloque justo debajo del botón */
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 150px;
+  }
+  
+  /* Estilo de los elementos del menú */
+  .dropdown-item {
+    padding: 10px;
+    background-color: white;
+    border: none;
+    text-align: left;
+    width: 100%;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  /* Hover en los elementos del menú */
+  .dropdown-item:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Estilo de la opción de "Salir" */
+  .dropdown-item.exit {
+    background-color: #ff4d4d;
+    color: white;
+  }
+  
+  /* Hover en la opción "Salir" */
+  .dropdown-item.exit:hover {
+    background-color: #e60000;
+  }
+  
+  /* Evita que el menú se corte por el contenedor */
+  .exit-alert {
+    position: relative;
+    display: inline-block;
+  }
+  

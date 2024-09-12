@@ -18,6 +18,7 @@
     text-align: left;
   }
   
+  
   .form-group label {
     display: block;
     margin-bottom: 5px;
@@ -64,11 +65,10 @@
   .divv{
     background-color: white;
     text-align: center;
+    
   }
 
   .divv h2{
     color: #fed244;
-    margin-top: 70px;
     font-size: 30px;
-    margin-bottom: -25px;
   }

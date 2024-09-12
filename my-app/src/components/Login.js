@@ -1,31 +1,58 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Footer from './Footer';
-import './Login.css';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Login.css'; // Asegúrate de tener tus estilos CSS en este archivo o el correcto
 
 const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const storedUsers = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+    const user = storedUsers.find(u => (u.nombreUsuario === username || u.email === username) && u.contrasena === password);
+
+    if (user) {
+      // Guardar al usuario actual en localStorage
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      navigate('/home');  // Redirigir a la página principal
+    } else {
+      alert('Usuario o contraseña incorrectos');
+    }
+  };
+
   return (
-    <div className='divv'>
-    <h2>Iniciar Sesión</h2>
-      <div className="login-container">
-        <form className="login-form">
-          <div className="form-group">
-            <label htmlFor="email">Correo Electrónico</label>
-            <input type="email" id="email" placeholder="Ingresa tu correo electrónico" required />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Contraseña</label>
-            <input type="password" id="password" placeholder="Ingresa tu contraseña" required />
-          </div>
-          <button type="submit" className="login-button">Iniciar Sesión</button>
-          <div className="extra-links">
-            <Link to="/password-recovery">¿Olvidaste tu contraseña?</Link>
-          </div>
-        </form>
+    <div className="login-container">
+      <div className="divv">
+        <h2>Iniciar Sesión</h2>
       </div>
-      <Footer />
+      <form onSubmit={handleLogin} className="login-form">
+        <div className="form-group">
+          <label>Nombre de Usuario o Email:</label>
+          <input 
+            type="text" 
+            value={username} 
+            onChange={(e) => setUsername(e.target.value)} 
+            required 
+          />
+        </div>
+        <div className="form-group">
+          <label>Contraseña:</label>
+          <input 
+            type="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+          />
+        </div>
+        <button type="submit" className="login-button">Iniciar Sesión</button>
+      </form>
+      <div className="extra-links">
+        <a href="/password-recovery">¿Olvidaste tu contraseña?</a>
+      </div>
     </div>
   );
-}
+};
 
 export default Login;

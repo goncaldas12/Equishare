@@ -17,6 +17,7 @@ import './base.css';
 import './sandbox.css';
 import './embla.css';
 
+
 const OPTIONS = { loop: true };
 const SLIDES = [
   cesar,

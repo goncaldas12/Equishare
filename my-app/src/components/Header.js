@@ -7,7 +7,7 @@ const Header = () => {
     <header>
       <div className="header-content">
         {}
-        <img src={logo} alt="Imagen descriptiva" className="header-imagen" />
+        <img src={logo} alt="Logo" className="header-imagen" />
         <h1 id="titulo">Dividir gastos <br /> nunca fue tan fácil</h1>
       </div>
     </header>
@@ -15,3 +15,4 @@ const Header = () => {
 }
 
 export default Header;
+

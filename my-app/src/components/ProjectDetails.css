@@ -1,0 +1,218 @@
+/* Diseño general del contenedor del proyecto */
+.project-details-wrapper {
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background-color: #ffffff;
+  min-height: 100vh;
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Título y descripción del proyecto */
+.project-header {
+  text-align: center;
+}
+
+.project-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.project-description {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.project-header p {
+  font-size: 16px;
+  color: #777;
+}
+
+.open-dialog-btn, .new-contribution-btn {
+  background-color: #1e90ff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.open-dialog-btn:hover, .new-contribution-btn:hover {
+  background-color: #00509d;
+}
+
+/* Lista de miembros con diseño más visible */
+.members-list {
+  list-style-type: none;
+  padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 15px;
+}
+
+.member-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.member-item:hover {
+  transform: scale(1.02);
+}
+
+.member-item span {
+  font-size: 18px;
+  color: #333;
+}
+
+.remove-member-btn {
+  background-color: #ff5722;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.remove-member-btn:hover {
+  background-color: #e64a19;
+}
+
+/* Mensaje de que no hay miembros */
+.no-members {
+  color: #666;
+  text-align: center;
+  margin: 20px 0;
+  font-size: 16px;
+}
+
+/* Estilos para los diálogos */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.dialog-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Botones en los diálogos */
+button {
+  padding: 10px 15px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.confirm-contribution-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.close-dialog-btn, .cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.add-member-btn {
+  background-color: #2196F3;
+  color: white;
+}
+
+.confirm-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Botones de confirmación y cancelación para eliminar miembros */
+.confirm-btn, .cancel-btn {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+}
+
+.confirm-btn:hover {
+  background-color: #388e3c;
+}
+
+.cancel-btn:hover {
+  background-color: #d32f2f;
+}
+
+.new-contribution-btn{
+  background-color: #4CAF50;
+}
+
+/* Adaptabilidad para pantallas pequeñas */
+@media (max-width: 768px) {
+  .header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .open-dialog-btn, .new-contribution-btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .dialog-content {
+    width: 100%;
+  }
+}

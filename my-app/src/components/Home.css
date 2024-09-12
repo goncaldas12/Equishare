@@ -1,0 +1,127 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+#tittulo {
+  margin-top: 40px;
+  font-size: 35px;
+  letter-spacing:2px;
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+#subtitt {
+  font-size: 20px;
+  letter-spacing:1px;
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 80px;
+}
+
+.proyectos {
+ /* background: url('../images/Fondo.png') no-repeat center center; */
+  background-size: 650px;
+  background-color: #fed244;
+  width: 60%;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  min-height: 500px;
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Para alinear elementos desde arriba */
+}
+
+.proyectos h2 {
+  text-align: center;
+  color: black;
+  letter-spacing: 2px;
+}
+
+.project-item {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 23px;
+}
+
+.empty-project-item {
+  background-color: transparent;
+  padding: 33px;
+  border-radius: 10px;
+  box-shadow: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  visibility: hidden;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.controls select,
+.controls button {
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 5px;
+  width: auto;
+  color: black;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+
+#anterior{
+  background-color: #fed244;
+  border-radius: 5px;
+  border-color: #fed244;
+  padding: 1px;
+  font-size: smaller;
+  margin-right: 5px;
+}
+
+#siguiente{
+  background-color: #fed244;
+  border-radius: 5px;
+  border-color: #fed244;
+  padding: 1px;
+  font-size: smaller;
+  margin-left: 5px;
+}
+
+#nombbre{
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 2px;
+  font-style: italic;
+  font-weight: bolder;
+}
+
+#abrir{
+  cursor: pointer;
+}
+
