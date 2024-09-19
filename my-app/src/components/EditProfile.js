@@ -10,7 +10,14 @@ const EditProfile = () => {
   });
   const [originalProfileData, setOriginalProfileData] = useState({});
   const [isSaveDisabled, setIsSaveDisabled] = useState(true);
-  const [error, setError] = useState(''); // Para mostrar mensajes de error
+  const [error, setError] = useState('');
+  const [isPasswordChanging, setIsPasswordChanging] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmNewPassword: ''
+  });
+  const [passwordError, setPasswordError] = useState('');
 
   // Obtener currentUser desde localStorage
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -57,32 +64,26 @@ const EditProfile = () => {
   const handleClearProfilePicture = () => {
     setProfileData((prevData) => ({
       ...prevData,
-      fotoPerfil: '' // Restablecer a la foto por defecto
+      fotoPerfil: '' 
     }));
     setIsSaveDisabled(false);
   };
 
   const handleSave = () => {
     if (currentUser) {
-      // Validar la unicidad del nombre de usuario y email
       if (isUsernameOrEmailTaken()) {
         setError('El nombre de usuario o el email ya están en uso.');
         return;
       }
-      
-      const { contrasena, ...profileWithoutPassword } = profileData; // Excluir contraseña
 
-      // Guardar los cambios en currentUser en localStorage
+      const { contrasena, ...profileWithoutPassword } = profileData;
       localStorage.setItem('currentUser', JSON.stringify(profileWithoutPassword));
 
-      // Actualizar el usuario en el array 'usuarios'
       updateUserInUsers(profileWithoutPassword);
-
       setOriginalProfileData(profileData);
       alert('Perfil actualizado con éxito.');
       setIsSaveDisabled(true);
 
-      // Forzar la actualización del Navbar2
       window.dispatchEvent(new Event('profileUpdate'));
     } else {
       alert('No se puede actualizar el perfil. Usuario no autenticado.');
@@ -90,26 +91,51 @@ const EditProfile = () => {
   };
 
   const updateUserInUsers = (updatedProfile) => {
-    // Obtener usuarios del localStorage
     const storedUsers = JSON.parse(localStorage.getItem('usuarios')) || [];
-
-    // Actualizar el usuario correspondiente en el array de usuarios
     const updatedUsers = storedUsers.map(user =>
       user.email === currentUser.email ? { ...user, ...updatedProfile } : user
     );
-
-    // Guardar el array de usuarios actualizado en localStorage
     localStorage.setItem('usuarios', JSON.stringify(updatedUsers));
   };
 
   const isUsernameOrEmailTaken = () => {
-    // Obtener usuarios del localStorage
     const storedUsers = JSON.parse(localStorage.getItem('usuarios')) || [];
-    
     return storedUsers.some(user => 
       (user.nombreUsuario === profileData.nombreUsuario && user.email !== currentUser.email) || 
       (user.email === profileData.email && user.email !== currentUser.email)
     );
+  };
+
+  // Funciones de cambio de contraseña
+  const handlePasswordChange = () => {
+    const storedUsers = JSON.parse(localStorage.getItem('usuarios')) || [];
+    const currentStoredUser = storedUsers.find(user => user.email === currentUser.email);
+
+    if (passwordData.currentPassword !== currentStoredUser.contrasena) {
+      setPasswordError('La contraseña actual es incorrecta.');
+      return;
+    }
+
+    if (passwordData.newPassword !== passwordData.confirmNewPassword) {
+      setPasswordError('Las contraseñas nuevas no coinciden.');
+      return;
+    }
+
+    // Actualizar la contraseña
+    const updatedUsers = storedUsers.map(user =>
+      user.email === currentUser.email ? { ...user, contrasena: passwordData.newPassword } : user
+    );
+    localStorage.setItem('usuarios', JSON.stringify(updatedUsers));
+
+    setPasswordError('');
+    alert('Contraseña actualizada con éxito.');
+    setIsPasswordChanging(false);
+    setPasswordData({ currentPassword: '', newPassword: '', confirmNewPassword: '' });
+  };
+
+  const handlePasswordFieldChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordData(prev => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -169,6 +195,47 @@ const EditProfile = () => {
       >
         Guardar Cambios
       </button>
+
+      {/* Botón para cambiar la contraseña */}
+      <button className="change-password-btn" onClick={() => setIsPasswordChanging(!isPasswordChanging)}>
+        Cambiar Contraseña
+      </button>
+
+      {isPasswordChanging && (
+        <div className="password-change-section">
+          <div className="input-section">
+            <label>Contraseña Actual</label>
+            <input
+              type="password"
+              name="currentPassword"
+              value={passwordData.currentPassword}
+              onChange={handlePasswordFieldChange}
+            />
+          </div>
+          <div className="input-section">
+            <label>Nueva Contraseña</label>
+            <input
+              type="password"
+              name="newPassword"
+              value={passwordData.newPassword}
+              onChange={handlePasswordFieldChange}
+            />
+          </div>
+          <div className="input-section">
+            <label>Confirmar Nueva Contraseña</label>
+            <input
+              type="password"
+              name="confirmNewPassword"
+              value={passwordData.confirmNewPassword}
+              onChange={handlePasswordFieldChange}
+            />
+          </div>
+          {passwordError && <p className="error-message">{passwordError}</p>}
+          <button className="confirm-btn" onClick={handlePasswordChange}>
+            Confirmar Cambio de Contraseña
+          </button>
+        </div>
+      )}
     </div>
   );
 };

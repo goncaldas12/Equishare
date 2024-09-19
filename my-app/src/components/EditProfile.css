@@ -149,3 +149,33 @@
     background-color: #c62828; /* Rojo oscuro */
   }
   
+
+  .password-change-section {
+    margin-top: 20px;
+  }
+  
+  .change-password-btn {
+    margin-top: 10px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .confirm-btn {
+    margin-top: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  

@@ -87,7 +87,7 @@ const Navbar2 = ({ onLogout }) => {
         
             {isDropdownOpen && (
               <div className="dropdown-menu dropdown-teams">
-                <Link to="projects" className="dropdown-item">Tus Proyectos</Link>
+                <Link to="projects" className="dropdown-item">Archivados</Link>
                 <Link to="edit-profile" className="dropdown-item">Editar perfil</Link>
                 <button className="dropdown-item" onClick={handleLogout}>Cerrar sesión</button> {/* Usar botón para cerrar sesión */}
               </div>

@@ -196,8 +196,37 @@ button {
   background-color: #d32f2f;
 }
 
-.new-contribution-btn{
+.new-contribution-btn {
   background-color: #4CAF50;
+}
+
+/* Estilo para balance positivo y negativo */
+.members-balance{
+  max-width: 700px;
+  margin-bottom: 90px;
+  margin-top: 60px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#gol{
+  text-align: center;
+}
+
+.positive-balance {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.negative-balance {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 /* Adaptabilidad para pantallas pequeñas */
@@ -216,3 +245,4 @@ button {
     width: 100%;
   }
 }
+

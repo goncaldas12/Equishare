@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import './ProjectDetails.css';
+import ProjectHistory from './ProjectHistory';
 
 const ProjectDetails = () => {
   const { projectId } = useParams();
@@ -14,6 +15,7 @@ const ProjectDetails = () => {
   const [selectedRecipient, setSelectedRecipient] = useState('');
   const [contributionDescription, setContributionDescription] = useState('');
   const [contributionAmount, setContributionAmount] = useState('');
+  const [selectedImage, setSelectedImage] = useState(null); //CAMBIO: Estado para almacenar la imagen seleccionada
   const currentUser = localStorage.getItem('username') || 'Tú';
 
   useEffect(() => {
@@ -112,6 +114,18 @@ const ProjectDetails = () => {
     localStorage.setItem('currentUser', JSON.stringify(storedUser));
   };
 
+  //CAMBIO: Función para manejar la carga de imagen
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0]; // Obtener el archivo seleccionado
+    if (file) {
+      const reader = new FileReader(); // Usar FileReader para convertir la imagen a base64
+      reader.onloadend = () => {
+        setSelectedImage(reader.result); // Guardar la imagen en el estado como base64
+      };
+      reader.readAsDataURL(file); // Leer el archivo como una URL base64
+    }
+  };
+
   const handleAddContribution = () => {
     const amount = parseFloat(contributionAmount);
     if (!contributionDescription || isNaN(amount) || amount <= 0 || !selectedMember) return;
@@ -119,39 +133,34 @@ const ProjectDetails = () => {
     const contributor = selectedMember; // El que está pagando
     const recipient = contributionType === 'SALDAR DEUDA' ? selectedRecipient : null; // El que está recibiendo (solo si es SALDAR DEUDA)
   
-    if (contributionType === 'APORTE') {
-      const updatedProject = {
-        ...project,
-        total: project.total + amount,
-        contributions: {
-          ...project.contributions,
-          [contributor]: (project.contributions[contributor] || 0) + amount,
-        },
-        historial: [
-          ...project.historial,
-          { type: 'APORTE', member: contributor, description: contributionDescription, amount, date: new Date() },
-        ],
-      };
-      setProject(updatedProject);
-      updateLocalStorageForAllUsers(updatedProject);
-    } else if (contributionType === 'SALDAR DEUDA') {
-      if (!recipient) return;
+    const newContribution = {
+      type: contributionType,
+      member: contributor,
+      recipient: recipient || null,
+      description: contributionDescription,
+      amount,
+      date: new Date(),
+      image: selectedImage || null //CAMBIO: Incluye la imagen en los datos de la contribución
+    };
+
+     // Actualizar el total del proyecto
+    const updatedTotal = contributionType === 'APORTE'
+      ? (project.total || 0) + amount
+      : (project.total || 0); // Si es SALDAR DEUDA, el total no cambia
   
-      const updatedProject = {
-        ...project,
-        contributions: {
-          ...project.contributions,
-          [contributor]: (project.contributions[contributor] || 0) + amount, 
-          [recipient]: (project.contributions[recipient] || 0) - amount,   
-        },
-        historial: [
-          ...project.historial,
-          { type: 'SALDAR DEUDA', member: contributor, recipient, description: contributionDescription, amount, date: new Date() },
-        ],
-      };
-      setProject(updatedProject);
-      updateLocalStorageForAllUsers(updatedProject);
-    }
+    const updatedProject = {
+      ...project,
+      total: updatedTotal, // Actualiza el total
+      contributions: {
+        ...project.contributions,
+        [contributor]: (project.contributions[contributor] || 0) + amount,
+        ...(recipient && { [recipient]: (project.contributions[recipient] || 0) - amount })
+      },
+      historial: [...project.historial, newContribution], //CAMBIO: Agrega la contribución al historial
+    };
+  
+    setProject(updatedProject);
+    updateLocalStorageForAllUsers(updatedProject);
   
     // Resetear campos del formulario
     setIsContributionDialogOpen(false);
@@ -159,8 +168,8 @@ const ProjectDetails = () => {
     setContributionAmount('');
     setSelectedMember('');
     setSelectedRecipient('');
+    setSelectedImage(null); //CAMBIO: Limpiar la imagen seleccionada
   };
-  
 
   const availableRecipients = project ? project.members.filter(member => member !== selectedMember) : [];
 
@@ -176,6 +185,40 @@ const ProjectDetails = () => {
   if (!project) {
     return <div>Cargando...</div>;
   }
+
+
+
+
+
+  const calculateBalance = (total, members) => {
+    const average = total / members.length;
+    return members.map(member => {
+      const contribution = project.contributions[member] || 0;
+      const balance = contribution - average;
+      return {
+        member,
+        contribution,
+        balance
+      };
+    });
+  };
+
+  const balanceData = project ? calculateBalance(project.total, project.members) : [];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <div className="project-details-wrapper">
@@ -194,7 +237,27 @@ const ProjectDetails = () => {
           Nueva Contribución
         </button>
       </div>
-
+      <div className="content-wrapper">
+        {/* Lista de balance de integrantes */}
+        <div className="members-balance">
+          <h2 id="gol">Balance de integrantes</h2>
+          <ul>
+              {balanceData
+                .filter(({ balance }) => balance !== 0) // Filtra miembros con balance 0
+                .map(({ member, balance }, index) => (
+                  <li 
+                    key={index}
+                    className={balance > 0 ? 'positive-balance' : 'negative-balance'}
+                  >
+                    {balance > 0 
+                      ? `${member} debe recibir ${balance.toFixed(2)}`
+                      : `${member} debe pagar ${(balance * -1).toFixed(2)}`}
+                  </li>
+              ))}
+          </ul>
+        </div>
+        <ProjectHistory history={project.historial} />
+      </div>
       {isDialogOpen && (
         <div className="dialog-overlay" onClick={closeDialogOnOutsideClick}>
           <div className="dialog-content">
@@ -244,7 +307,7 @@ const ProjectDetails = () => {
               value={selectedMember}
               onChange={(e) => setSelectedMember(e.target.value)}
             >
-              <option value="">Selecciona quien esta pagando:</option>
+              <option value="">Seleccionar miembro</option>
               {project.members.map((member, index) => (
                 <option key={index} value={member}>
                   {member}
@@ -254,15 +317,15 @@ const ProjectDetails = () => {
 
             {contributionType === 'SALDAR DEUDA' && (
               <>
-                <label>Selecciona quien esta recibiendo:</label>
+                <label>Selecciona quien está recibiendo:</label>
                 <select
                   value={selectedRecipient}
                   onChange={(e) => setSelectedRecipient(e.target.value)}
                 >
-                  <option value="">Selecciona un receptor</option>
-                  {availableRecipients.map((recipient, index) => (
-                    <option key={index} value={recipient}>
-                      {recipient}
+                  <option value="">Seleccionar destinatario</option>
+                  {availableRecipients.map((member, index) => (
+                    <option key={index} value={member}>
+                      {member}
                     </option>
                   ))}
                 </select>
@@ -274,7 +337,6 @@ const ProjectDetails = () => {
               type="text"
               value={contributionDescription}
               onChange={(e) => setContributionDescription(e.target.value)}
-              placeholder="Descripción del aporte"
             />
 
             <label>Monto:</label>
@@ -282,24 +344,22 @@ const ProjectDetails = () => {
               type="number"
               value={contributionAmount}
               onChange={(e) => setContributionAmount(e.target.value)}
-              placeholder="Monto del aporte"
             />
 
-            <div className="contribution-dialog-actions">
-              <button
-                className="cancel-btn"
-                onClick={() => setIsContributionDialogOpen(false)}
-              >
-                Cancelar
-              </button>
-              <button
-                className="confirm-btn"
-                onClick={handleAddContribution}
-                disabled={!isContributionValid()} // El botón se deshabilita si no se cumplen las validaciones
-              >
-                Confirmar
-              </button>
-            </div>
+            <label>Subir imagen (opcional):</label> {/* CAMBIO: Input para subir la imagen */}
+            <input type="file" accept="image/*" onChange={handleImageUpload} /> {/* CAMBIO: Manejar la subida de archivos */}
+
+            <button
+              className="add-contribution-btn"
+              onClick={handleAddContribution}
+              disabled={!isContributionValid()}
+            >
+              Añadir Contribución
+            </button>
+
+            <button className="close-dialog-btn" onClick={toggleContributionDialog}>
+              Cerrar
+            </button>
           </div>
         </div>
       )}
@@ -307,16 +367,13 @@ const ProjectDetails = () => {
       {isConfirmDialogOpen && (
         <div className="dialog-overlay" onClick={closeDialogOnOutsideClick}>
           <div className="dialog-content">
-            <h2>Confirmar eliminación</h2>
-            <p>
-              ¿Estás seguro de que quieres eliminar a {memberToRemove} del
-              proyecto?
-            </p>
-            <button className="cancel-btn" onClick={cancelRemoveMember}>
-              Cancelar
+            <h2 className="confirm-title">Confirmar eliminación</h2>
+            <p>¿Estás seguro de que quieres eliminar a {memberToRemove} del proyecto?</p>
+            <button className="confirm-remove-btn" onClick={confirmRemoveMember}>
+              Eliminar
             </button>
-            <button className="confirm-btn" onClick={confirmRemoveMember}>
-              Confirmar
+            <button className="cancel-remove-btn" onClick={cancelRemoveMember}>
+              Cancelar
             </button>
           </div>
         </div>
