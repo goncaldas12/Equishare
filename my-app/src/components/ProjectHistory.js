@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import './ProjectHistory.css';
 
-const ProjectHistory = ({ history }) => {
+const ProjectHistory = ({ historial }) => {
   const [selectedImage, setSelectedImage] = useState(null);
+
+  // Asegurarnos que history sea un array vacío si es undefined
+  const safeHistory = Array.isArray(historial) ? historial : [];
 
   const openImageModal = (image) => {
     setSelectedImage(image);
@@ -15,9 +18,9 @@ const ProjectHistory = ({ history }) => {
   return (
     <div className="history-container">
       <h2 id="historial">Historial de Contribuciones</h2>
-      {history.length > 0 ? (
+      {safeHistory.length > 0 ? (
         <ul className="history-list">
-          {history.slice().reverse().map((item, index) => (
+          {safeHistory.slice().reverse().map((item, index) => (
             <li
               key={index}
               className={`history-item ${
