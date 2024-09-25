@@ -314,3 +314,102 @@ button {
   }
 }
 
+/* Adaptabilidad para pantallas pequeñas */
+@media (max-width: 768px) {
+  .project-details-wrapper {
+    padding: 10px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .header-row {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .open-dialog-btn, .new-contribution-btn {
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .project-header {
+    text-align: center;
+  }
+
+  .project-title {
+    font-size: 28px;
+  }
+
+  .project-description {
+    font-size: 16px;
+  }
+
+  .members-list {
+    max-height: 200px;
+  }
+
+  .dialog-content {
+    width: 100%;
+  }
+
+  .members-balance {
+    max-width: 100%;
+    margin: 20px auto;
+  }
+
+  .division-settings {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  .dialog {
+    width: 90%;
+  }
+
+  .positive-balance, .negative-balance {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .percentage-input {
+    width: 100%;
+  }
+
+  .confirm-btn, .cancel-btn {
+    width: 100%;
+  }
+}
+
+/* Adaptabilidad para pantallas extra pequeñas (teléfonos) */
+@media (max-width: 480px) {
+  .project-title {
+    font-size: 24px;
+  }
+
+  .project-description {
+    font-size: 14px;
+  }
+
+  .members-list {
+    max-height: 150px;
+  }
+
+  .open-dialog-btn, .new-contribution-btn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .positive-balance, .negative-balance {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .division-settings {
+    padding: 10px;
+  }
+}

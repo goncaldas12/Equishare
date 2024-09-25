@@ -1,4 +1,4 @@
-
+/* Estilos generales para la navbar */
 .navbar {
   background-color: #fed244;
   display: flex;
@@ -6,27 +6,23 @@
   align-items: center;
   padding: 20px 50px;
   padding-top: 25px;
+  flex-wrap: wrap; /* Permite que los elementos se reorganicen en pantallas pequeñas */
 }
-
-
 
 .navbar-brand {
   display: flex;
   align-items: center;
 }
 
-
 .navbar-icon {
   width: 30px;
   height: auto;
 }
 
-
 .d-grid {
-  display: flex; 
+  display: flex;
   gap: 10px;
 }
-
 
 #btn1, #btn2 {
   border-radius: 25px; 
@@ -38,24 +34,20 @@
   transition: background-color 0.3s, transform 0.3s; 
 }
 
-
 #btn1 {
   background-color: white;
   color: #fed244;
   border: 2px solid #fed244; 
 }
 
-
 #btn2 {
   background-color: #fed244;
   color: white;
 }
 
-
 #btn1:hover, #btn2:hover {
   transform: scale(1.10); 
 }
-
 
 #btn1:focus, #btn2:focus {
   outline: 2px solid #ffffff; 
@@ -70,4 +62,42 @@
   margin-left: 15px;
   line-height: 1.2;
   text-decoration: none;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 30px; /* Reduce el padding en pantallas más pequeñas */
+  }
+
+  .titulo {
+    font-size: 22px; /* Reduce el tamaño de la fuente */
+  }
+
+  #btn1, #btn2 {
+    font-size: 14px; /* Ajusta el tamaño de los botones */
+    padding: 8px 16px; /* Reduce el padding en los botones */
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 10px 20px; /* Aún más pequeño el padding para pantallas pequeñas */
+    flex-direction: column; /* Cambia la disposición a vertical en pantallas muy pequeñas */
+    gap: 10px; /* Agrega espacio entre los elementos */
+  }
+
+  .d-grid {
+    justify-content: center; /* Centra los botones en pantallas pequeñas */
+  }
+
+  .titulo {
+    font-size: 20px; /* Ajusta el tamaño de la fuente para móviles */
+  }
+
+  #btn1, #btn2 {
+    width: 100%; /* Los botones ocupan el 100% del ancho */
+    padding: 10px;
+    font-size: 14px;
+  }
 }

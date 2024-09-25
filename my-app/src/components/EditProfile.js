@@ -75,21 +75,32 @@ const EditProfile = () => {
         setError('El nombre de usuario o el email ya están en uso.');
         return;
       }
-
+  
+      // Crear un objeto del perfil sin la contraseña
       const { contrasena, ...profileWithoutPassword } = profileData;
-      localStorage.setItem('currentUser', JSON.stringify(profileWithoutPassword));
-
-      updateUserInUsers(profileWithoutPassword);
+  
+      // Actualizar currentUser en localStorage
+      const updatedCurrentUser = {
+        ...currentUser,
+        ...profileWithoutPassword
+      };
+      localStorage.setItem('currentUser', JSON.stringify(updatedCurrentUser));
+  
+      // Actualizar usuarios en localStorage
+      updateUserInUsers(updatedCurrentUser);
+  
+      // Actualizar el estado de los datos originales para desactivar el botón de guardar
       setOriginalProfileData(profileData);
       alert('Perfil actualizado con éxito.');
       setIsSaveDisabled(true);
-
+  
+      // Disparar el evento de actualización de perfil si es necesario
       window.dispatchEvent(new Event('profileUpdate'));
     } else {
       alert('No se puede actualizar el perfil. Usuario no autenticado.');
     }
   };
-
+  
   const updateUserInUsers = (updatedProfile) => {
     const storedUsers = JSON.parse(localStorage.getItem('usuarios')) || [];
     const updatedUsers = storedUsers.map(user =>

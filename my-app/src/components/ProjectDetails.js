@@ -282,38 +282,13 @@ const ProjectDetails = () => {
   </div>
 
 
-      <div className="division-settings">
-        <label>Selecciona el tipo de división:</label>
-        <select value={divisionType} onChange={(e) => setDivisionType(e.target.value)}>
-          <option value="equitativo">División equitativa</option>
-          <option value="porcentajes">División por porcentajes</option>
-        </select>
-
-        {/* Campos para asignar porcentajes si se selecciona "porcentajes" */}
-        {divisionType === 'porcentajes' && (
-          <div className="percentage-inputs">
-            {project.members.map((member, index) => (
-              <div key={index} className="percentage-field">
-                <label>{member}</label>
-                <input
-                  type="number"
-                  value={percentages[member] || ''}
-                  onChange={(e) => handlePercentageChange(member, e.target.value)}
-                  min="0"
-                  max="100"
-                />%
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
+  
 
     <div className="content-wrapper">
       <div className="members-balance">
         <h2 id="gol">Balance de integrantes</h2>
         <ul>
-          {balanceData
+          {balanceData //aca se calcula lo que debe pagar cada uno
             .filter(({ balance }) => balance !== 0)
             .map(({ member, balance }, index) => (
               <li key={index} className={balance > 0 ? 'positive-balance' : 'negative-balance'}>
