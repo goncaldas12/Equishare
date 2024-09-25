@@ -34,19 +34,18 @@ function App() {
       <Routes>
         {/* Rutas bajo el Layout2 (Páginas Públicas) */}
         <Route path="/" element={<Layout2 />} >
-          <Route index element={<><Header /><Features /></>} /> {/* Página de inicio */}
-          <Route path="/login" element={<Login />} /> {/* Página de inicio de sesión */}
-          <Route path="/register" element={<Register />} /> {/* Página de registro */}
-          <Route path="/password-recovery" element={<PasswordRecovery />} /> {/* Página de recuperación de contraseña */}
+          <Route index element={<><Header /><Features /></>} />
+          <Route path="/login" element={<Login />} /> 
+          <Route path="/register" element={<Register />} /> 
+          <Route path="/password-recovery" element={<PasswordRecovery />} /> 
         </Route>
         
         {/* Rutas bajo el Layout1 (Páginas Privadas) */}
-        <Route path="/home" element={<Layout1 currentUser={currentUser} onLogout={handleLogout} />}> {/* Pasar currentUser y handleLogout como props */}
-          <Route index element={<Home />} /> {/* Página principal (Dashboard) */}
-          {/* Ruta para los detalles del proyecto */}
+        <Route path="/home" element={<Layout1 currentUser={currentUser} onLogout={handleLogout} />}> 
+          <Route index element={<Home />} />
           <Route path="project/:projectId" element={<ProjectDetails />} /> 
           <Route path="projects" element={<Projects />} />
-          <Route path="edit-profile" element={<EditProfile />} /> {/* /home/project/:projectId */}
+          <Route path="edit-profile" element={<EditProfile />} /> 
         </Route>
       </Routes>
     </Router>
