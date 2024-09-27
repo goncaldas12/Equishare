@@ -1,4 +1,4 @@
-/* Diseño general del contenedor del proyecto */
+
 .project-details-wrapper {
   padding: 20px;
   font-family: 'Arial', sans-serif;
@@ -15,7 +15,7 @@
   margin-bottom: 20px;
 }
 
-/* Título y descripción del proyecto */
+
 .project-header {
   text-align: center;
 }
@@ -49,11 +49,11 @@
   transition: background-color 0.3s;
 }
 
-.open-dialog-btn:hover, .new-contribution-btn:hover {
+.open-dialog-btn:hover {
   background-color: #00509d;
 }
 
-/* Lista de miembros con diseño más visible */
+
 .members-list {
   list-style-type: none;
   padding: 0;
@@ -98,7 +98,7 @@
   background-color: #e64a19;
 }
 
-/* Mensaje de que no hay miembros */
+
 .no-members {
   color: #666;
   text-align: center;
@@ -107,14 +107,14 @@
 }
 
 .dialog{
-  background-color: #fff; /* Fondo del diálogo */
-  opacity: 1; /* Asegúrate de que no haya opacidad */
-  padding: 20px; /* Agregar padding para que el contenido no esté pegado a los bordes */
-  border-radius: 10px; /* Esquinas redondeadas */
+  background-color: #fff; 
+  opacity: 1; 
+  padding: 20px; 
+  border-radius: 10px; 
   width: 450px;
 }
 
-/* Estilos para los diálogos */
+
 .dialog-overlay {
   position: fixed;
   top: 0;
@@ -160,7 +160,7 @@ input, select {
   border-radius: 4px;
 }
 
-/* Botones en los diálogos */
+
 button {
   padding: 10px 15px;
   margin: 10px;
@@ -198,7 +198,7 @@ button {
   color: white;
 }
 
-/* Botones de confirmación y cancelación para eliminar miembros */
+
 .confirm-btn, .cancel-btn {
   padding: 10px 20px;
   margin: 10px;
@@ -217,7 +217,11 @@ button {
   background-color: #4CAF50;
 }
 
-/* Estilo para balance positivo y negativo */
+.new-contribution-btn:hover{
+  background-color: #155724;
+}
+
+
 .members-balance{
   max-width: 700px;
   margin-bottom: 90px;
@@ -259,45 +263,54 @@ button {
 
 
 
-/* Estilos para la configuración de división */
 .division-settings {
-  position: absolute; /* Mantiene la posición a la izquierda */
-  top: 80px; /* Ajustar según el diseño */
-  left: 20px; /* Espacio desde la izquierda */
-  background-color: #f8f9fa; /* Fondo claro */
+  position: absolute; 
+  top: 80px;
+  left: 20px;
+  background-color: #f8f9fa; 
   padding: 15px;
   border: 1px solid #ced4da;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  max-width: 220px; /* Ancho ajustado */
+  max-width: 220px;
   max-width: fit-content;
   margin-top: 180px;
 }
 
 .percentage-inputs {
-  margin-top: 10px; /* Espacio entre el select y los campos */
+  margin-top: 10px; 
 }
 
 .percentage-field {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Espacio entre el label y el input */
-  margin-bottom: 5px; /* Espacio entre cada campo */
+  justify-content: space-between; 
+  margin-bottom: 5px; 
 }
 
 .percentage-field label {
-  flex: 1; /* Para que el label ocupe el espacio */
-  margin-right: 10px; /* Espacio entre el label y el input */
+  flex: 1; 
+  margin-right: 10px;
 }
 
 .percentage-input {
-  width: 60px; /* Tamaño fijo para el input */
-  min-width: 60px; /* Tamaño mínimo para evitar deformaciones */
+  width: 60px; 
+  min-width: 60px; 
+}
+
+.color-confirm{
+  background-color: #fed244;
+  margin-left: 150px;
+}
+
+.color-confirm:hover{
+  background-color: #675004;
 }
 
 
 
-/* Adaptabilidad para pantallas pequeñas */
+
+
 @media (max-width: 768px) {
   .header-row {
     flex-direction: column;
@@ -314,7 +327,7 @@ button {
   }
 }
 
-/* Adaptabilidad para pantallas pequeñas */
+
 @media (max-width: 768px) {
   .project-details-wrapper {
     padding: 10px;
@@ -383,9 +396,10 @@ button {
   .confirm-btn, .cancel-btn {
     width: 100%;
   }
+
 }
 
-/* Adaptabilidad para pantallas extra pequeñas (teléfonos) */
+
 @media (max-width: 480px) {
   .project-title {
     font-size: 24px;

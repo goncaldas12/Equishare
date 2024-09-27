@@ -1,4 +1,3 @@
-/* Diseño general */
 .login-container {
   display: flex;
   flex-direction: column;
@@ -80,10 +79,10 @@
   font-size: 30px;
 }
 
-/* Media Queries para pantallas pequeñas */
+
 @media (max-width: 768px) {
   .login-container {
-    max-width: 80%; /* Ajusta el ancho del formulario en pantallas medianas */
+    max-width: 80%; 
     margin: 30px auto;
     padding: 15px;
     margin-top: 0px;
@@ -106,7 +105,7 @@
 
 @media (max-width: 480px) {
   .login-container {
-    max-width: 85%; /* Reduce aún más el ancho del formulario para pantallas pequeñas */
+    max-width: 85%; 
     margin: 20px auto;
     margin-top: 0px;
     padding: 10px;

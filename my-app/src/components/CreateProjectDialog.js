@@ -11,10 +11,10 @@ const CreateProjectDialog = ({ onCreate }) => {
       alert("El nombre del proyecto es obligatorio.");
       return;
     }
-    onCreate(newProjectName, newProjectDescription);  // Crear el proyecto con nombre y descripción
+    onCreate(newProjectName, newProjectDescription); 
     setNewProjectName("");
     setNewProjectDescription("");
-    setIsOpen(false);  // Cerrar el diálogo
+    setIsOpen(false);  
   };
 
   return (

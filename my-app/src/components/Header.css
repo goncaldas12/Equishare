@@ -34,47 +34,47 @@ header {
 
 @media (max-width: 768px) {
   header {
-    padding: 10px; /* Reduce el padding del header */
+    padding: 10px; 
     margin-bottom: 0;
   }
 
   .header-content {
-    flex-direction: column; /* Cambia la dirección del contenido para apilarse verticalmente */
-    padding: 15px 10px; /* Reduce el padding del contenido */
+    flex-direction: column; 
+    padding: 15px 10px;
     padding-top: 0;
   }
 
   .header-imagen {
-    max-width: 150px; /* Reduce el tamaño de la imagen a la mitad */
-    margin-right: 0; /* Elimina el margen derecho */
-    margin-bottom: 10px; /* Añade un margen inferior para separar la imagen del texto */
+    max-width: 150px; 
+    margin-right: 0;
+    margin-bottom: 10px; 
   }
 
   #titulo {
-    font-size: 28px; /* Reduce considerablemente el tamaño de la fuente */
-    margin-left: 0; /* Elimina el margen izquierdo */
-    text-align: center; /* Centra el texto para mejor visualización en pantallas pequeñas */
+    font-size: 28px;
+    margin-left: 0;
+    text-align: center; 
     line-height: 1.1;
   }
 }
 
 @media (max-width: 480px) {
   header {
-    padding: 5px; /* Aún más pequeño en pantallas extra pequeñas */
+    padding: 5px; 
     margin-bottom: 11px;
   }
 
   .header-content {
-    padding: 10px; /* Reduce aún más el padding */
+    padding: 10px; 
   }
 
   .header-imagen {
-    max-width: 100px; /* Ajusta el tamaño de la imagen para pantallas extremadamente pequeñas */
+    max-width: 100px; 
   }
 
   #titulo {
-    font-size: 20px; /* Reduce el tamaño de la fuente para que quepa mejor en pantallas pequeñas */
-    letter-spacing: 1px; /* Reduce el espaciado entre letras */
+    font-size: 20px; 
+    letter-spacing: 1px; 
   }
 
 }

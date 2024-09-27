@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar2.css';
 import logo from '../images/E (2).png';
-import defaultProfilePic from '../images/avatar-default.png'; // Avatar predeterminado gris
+import defaultProfilePic from '../images/avatar-default.png'; 
 
 const Navbar2 = ({ onLogout }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -18,7 +18,7 @@ const Navbar2 = ({ onLogout }) => {
 
     window.addEventListener('profileUpdate', handleProfileUpdate);
 
-    // Limpiar el evento cuando el componente se desmonta
+    
     return () => {
       window.removeEventListener('profileUpdate', handleProfileUpdate);
     };
@@ -39,13 +39,13 @@ const Navbar2 = ({ onLogout }) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false); // Cierra el dropdown si el clic fue fuera de él
+        setIsDropdownOpen(false); 
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
 
-    // Limpia el evento cuando el componente se desmonta
+    
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -58,13 +58,13 @@ const Navbar2 = ({ onLogout }) => {
       user.email === currentUser.email ? { ...user, proyectos: currentUser.proyectos } : user
     );
 
-    // Guardar la lista de usuarios actualizada
+    
     localStorage.setItem('users', JSON.stringify(updatedUsers));
 
     // Remover el currentUser de localStorage
     localStorage.removeItem('currentUser');
     setCurrentUser(null);
-    onLogout(); // Notificar que se ha cerrado sesión
+    onLogout(); 
     navigate('/');
   };
 
@@ -89,7 +89,7 @@ const Navbar2 = ({ onLogout }) => {
               <div className="dropdown-menu dropdown-teams">
                 <Link to="projects" className="dropdown-item">Archivados</Link>
                 <Link to="edit-profile" className="dropdown-item">Editar perfil</Link>
-                <button className="dropdown-item" onClick={handleLogout}>Cerrar sesión</button> {/* Usar botón para cerrar sesión */}
+                <button className="dropdown-item" onClick={handleLogout}>Cerrar sesión</button> 
               </div>
             )}
           </div>

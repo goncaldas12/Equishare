@@ -19,10 +19,10 @@ const EditProfile = () => {
   });
   const [passwordError, setPasswordError] = useState('');
 
-  // Obtener currentUser desde localStorage
+  // currentUser desde localStorage
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-  // Cargar los datos del perfil desde currentUser si existe
+  // Cargar los datos desde currentUser 
   useEffect(() => {
     if (currentUser) {
       setProfileData({
@@ -86,7 +86,7 @@ const EditProfile = () => {
       };
       localStorage.setItem('currentUser', JSON.stringify(updatedCurrentUser));
   
-      // Actualizar usuarios en localStorage
+      
       updateUserInUsers(updatedCurrentUser);
   
       // Actualizar el estado de los datos originales para desactivar el botón de guardar
@@ -94,7 +94,7 @@ const EditProfile = () => {
       alert('Perfil actualizado con éxito.');
       setIsSaveDisabled(true);
   
-      // Disparar el evento de actualización de perfil si es necesario
+    
       window.dispatchEvent(new Event('profileUpdate'));
     } else {
       alert('No se puede actualizar el perfil. Usuario no autenticado.');

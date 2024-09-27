@@ -18,7 +18,7 @@ const Home = () => {
 
     if (user) {
       setCurrentUser(user); 
-      setProjects(user.proyectos || []);  // Cargar los proyectos del usuario actual o inicializar con array vacío
+      setProjects(user.proyectos || []);  
     }
   }, []);
 
@@ -34,7 +34,7 @@ const Home = () => {
     // Guardar el usuario actualizado y la lista de usuarios en el localStorage
     localStorage.setItem('usuarios', JSON.stringify(updatedUsers));
     localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-    localStorage.setItem('projects', JSON.stringify(updatedProjects)); // Guardar una copia independiente de los proyectos
+    localStorage.setItem('projects', JSON.stringify(updatedProjects)); 
 
     setProjects(updatedProjects);
     setCurrentUser(updatedUser);
@@ -89,7 +89,7 @@ const Home = () => {
     localStorage.setItem('usuarios', JSON.stringify(updatedUsers));
     localStorage.setItem('currentUser', JSON.stringify(updatedUser));
   
-    // Actualizar el estado local
+    
     setProjects(updatedProjects);
     setCurrentUser(updatedUser);
   };

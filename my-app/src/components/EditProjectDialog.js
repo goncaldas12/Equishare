@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './EditProjectDialog.css'; // Importar estilos CSS separados
+import './EditProjectDialog.css'; 
 
 const EditProjectDialog = ({ project, onSave, onCancel }) => {
   const [projectName, setProjectName] = useState(project.name);

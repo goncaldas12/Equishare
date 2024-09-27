@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import AlertDialog from "./AlertDialog";
 import EditProjectDialog from "./EditProjectDialog";
-import HideProjectDialog from "./HideProjectDialog"; // Importa el nuevo diálogo de ocultar
+import HideProjectDialog from "./HideProjectDialog"; 
 import "./ExitAlert.css";
 
 const ExitAlert = ({ project, onExit, onEdit, onHide }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
-  const [isHideDialogOpen, setIsHideDialogOpen] = useState(false); // Estado para "Ocultar del Home"
+  const [isHideDialogOpen, setIsHideDialogOpen] = useState(false); 
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
@@ -27,7 +27,7 @@ const ExitAlert = ({ project, onExit, onEdit, onHide }) => {
 
   const handleHideClick = () => {
     setIsDropdownOpen(false);
-    setIsHideDialogOpen(true); // Abrir el diálogo para ocultar del Home
+    setIsHideDialogOpen(true); 
   };
 
   const handleSaveProject = (newName, newDescription) => {
@@ -35,17 +35,17 @@ const ExitAlert = ({ project, onExit, onEdit, onHide }) => {
     setIsEditDialogOpen(false);
   };
 
-  // Funciones para salir del proyecto
+  
   const handleCancelExit = () => {
     setIsExitDialogOpen(false);
   };
 
   const handleConfirmExit = () => {
-    onExit(project.id); // Ejecuta la función para salir del proyecto
+    onExit(project.id); 
     setIsExitDialogOpen(false);
   };
 
-  // Funciones para ocultar el proyecto del Home
+  
   const handleCancelHide = () => {
     setIsHideDialogOpen(false);
   };

@@ -33,7 +33,7 @@ const Projects = () => {
     // Guardar el usuario actualizado y la lista de usuarios en el localStorage
     localStorage.setItem('usuarios', JSON.stringify(updatedUsers));
     localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-    localStorage.setItem('projects', JSON.stringify(updatedProjects)); // Guardar una copia independiente de los proyectos
+    localStorage.setItem('projects', JSON.stringify(updatedProjects)); 
 
     setProjects(updatedProjects);
     setCurrentUser(updatedUser);

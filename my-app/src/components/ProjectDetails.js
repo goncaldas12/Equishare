@@ -15,9 +15,9 @@ const ProjectDetails = () => {
   const [selectedRecipient, setSelectedRecipient] = useState('');
   const [contributionDescription, setContributionDescription] = useState('');
   const [contributionAmount, setContributionAmount] = useState('');
-  const [selectedImage, setSelectedImage] = useState(null); //CAMBIO: Estado para almacenar la imagen seleccionada
-  const [divisionType, setDivisionType] = useState('equitativo'); // 'equitativo' o 'porcentajes'
-  const [percentages, setPercentages] = useState({}); // Porcentajes asignados a cada miembro
+  const [selectedImage, setSelectedImage] = useState(null); 
+  const [divisionType, setDivisionType] = useState('equitativo'); 
+  const [percentages, setPercentages] = useState({}); 
 
   
 
@@ -120,11 +120,11 @@ const ProjectDetails = () => {
   };
 
   const handleImageUpload = (e) => {
-    const file = e.target.files[0]; // Obtener el archivo seleccionado
+    const file = e.target.files[0]; 
     if (file) {
       const reader = new FileReader(); // Usar FileReader para convertir la imagen a base64
       reader.onloadend = () => {
-        setSelectedImage(reader.result); // Guardar la imagen en el estado como base64
+        setSelectedImage(reader.result); 
       };
       reader.readAsDataURL(file); // Leer el archivo como una URL base64
     }
@@ -147,7 +147,7 @@ const ProjectDetails = () => {
       image: selectedImage || null
     };
   
-    // Asegurarnos de que el historial esté inicializado
+    
     const updatedHistorial = project.historial ? [...project.historial, newContribution] : [newContribution];
   
     const updatedTotal = contributionType === 'APORTE'
@@ -162,7 +162,7 @@ const ProjectDetails = () => {
         [contributor]: (project.contributions[contributor] || 0) + amount,
         ...(recipient && { [recipient]: (project.contributions[recipient] || 0) - amount })
       },
-      historial: updatedHistorial, // Asegurarnos de que siempre haya un array
+      historial: updatedHistorial, 
     };
   
     setProject(updatedProject);
@@ -326,8 +326,8 @@ const ProjectDetails = () => {
         <div className="dialog-overlay" onClick={closeDialogOnOutsideClick}>
           <div className="dialog">
             <h3>¿Estás seguro de que deseas eliminar a {memberToRemove} del proyecto?</h3>
-            <button onClick={confirmRemoveMember}>Sí</button>
-            <button onClick={cancelRemoveMember}>No</button>
+            <button className="color-confirm" onClick={confirmRemoveMember}>Sí</button>
+            <button className="color-cancel" onClick={cancelRemoveMember}>No</button>
           </div>
         </div>
       )}

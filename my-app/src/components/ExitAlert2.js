@@ -51,11 +51,11 @@ const ExitAlert2 = ({ project, onExit, onEdit, onHide }) => {
   };
 
   const handleConfirmHide = () => {
-    onHide(project.id); // Ejecuta la función para ocultar del Home
+    onHide(project.id); 
     setIsHideDialogOpen(false);
   };
 
-  // Manejo de clic fuera del dropdown
+  //  clic fuera del dropdown y que se cierre
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

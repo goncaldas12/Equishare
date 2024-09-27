@@ -4,7 +4,7 @@ import './ProjectHistory.css';
 const ProjectHistory = ({ historial }) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
-  // Asegurarnos que history sea un array vacío si es undefined
+  
   const safeHistory = Array.isArray(historial) ? historial : [];
 
   const openImageModal = (image) => {

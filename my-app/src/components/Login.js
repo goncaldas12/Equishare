@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Login.css'; // Asegúrate de tener tus estilos CSS en este archivo o el correcto
+import './Login.css'; 
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -16,7 +16,7 @@ const Login = () => {
     if (user) {
       // Guardar al usuario actual en localStorage
       localStorage.setItem('currentUser', JSON.stringify(user));
-      navigate('/home');  // Redirigir a la página principal
+      navigate('/home');  
     } else {
       alert('Usuario o contraseña incorrectos');
     }

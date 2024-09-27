@@ -136,7 +136,7 @@
 
   .clear-picture-btn {
     margin-top: 10px;
-    background-color: #f44336; /* Rojo */
+    background-color: #f44336; 
     color: white;
     border: none;
     padding: 5px;
@@ -146,7 +146,7 @@
   }
   
   .clear-picture-btn:hover {
-    background-color: #c62828; /* Rojo oscuro */
+    background-color: #c62828; 
   }
   
 

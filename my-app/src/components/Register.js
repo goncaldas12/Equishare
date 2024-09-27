@@ -32,7 +32,7 @@ const Register = () => {
     const newUserId = Date.now().toString();
 
     const newUser = {
-      id: newUserId,  // Asignar el ID único al nuevo usuario
+      id: newUserId,  
       nombreCompleto: name,
       email: email, 
       nombreUsuario: username,
@@ -43,10 +43,10 @@ const Register = () => {
 
     const updatedUsers = [...storedUsers, newUser];
     localStorage.setItem('usuarios', JSON.stringify(updatedUsers));
-    localStorage.setItem('currentUser', JSON.stringify(newUser));  // Guardar el usuario registrado como el usuario actual
+    localStorage.setItem('currentUser', JSON.stringify(newUser));  
 
     alert('Usuario registrado con éxito');
-    navigate('/home');  // Redirigir a la página principal tras el registro
+    navigate('/home');  
   };
 
   return (

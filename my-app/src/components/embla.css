@@ -115,43 +115,43 @@
 
 @media (max-width: 768px) {
   .embla {
-    max-width: 80%; /* Reduce el ancho total del carrusel */
-    margin-top: 100px; /* Reduce el margen superior para evitar superposición */
-    margin-bottom: -140px; /* Elimina el margen inferior */
-    --slide-height: 6rem; /* Reduce aún más la altura de las diapositivas */
-    --slide-spacing: 0.2rem; /* Disminuye más el espaciado entre diapositivas */
+    max-width: 80%; 
+    margin-top: 100px; 
+    margin-bottom: -140px; 
+    --slide-height: 6rem; 
+    --slide-spacing: 0.2rem; 
   }
 
   .embla__slide__number {
-    font-size: 1.2rem; /* Reduce el tamaño de la fuente */
-    height: var(--slide-height); /* Mantiene la altura acorde a las diapositivas */
+    font-size: 1.2rem; 
+    height: var(--slide-height); 
   }
 
   .embla__slide {
     padding-left: var(--slide-spacing);
-    max-width: 100%; /* Asegura que las imágenes no se salgan del viewport */
+    max-width: 100%; 
   }
 
   .embla__button {
-    width: 1.8rem; /* Reducir tamaño de los botones de control */
+    width: 1.8rem;
     height: 1.8rem;
   }
 
   .embla__dot {
-    width: 1.2rem; /* Reducir más el tamaño de los puntos */
+    width: 1.2rem;
     height: 1.2rem;
   }
 
   .embla__dot:after {
-    width: 0.6rem; /* Ajustar tamaño de los puntos seleccionados */
+    width: 0.6rem; 
     height: 0.6rem;
   }
 
-  /* Ajuste de imagen dentro del carrusel */
+  
   .embla__slide img {
-    max-width: 100%; /* Asegura que la imagen no se salga */
+    max-width: 100%; 
     height: auto;
-    object-fit: contain; /* Escala la imagen para que se mantenga dentro del viewport */
+    object-fit: contain; 
   }
 
 }

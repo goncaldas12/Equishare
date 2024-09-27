@@ -4,11 +4,11 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    background: rgba(0, 0, 0, 0.5); 
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Asegura que el diálogo esté encima de otros elementos */
+    z-index: 1000; 
   }
   
   .dialog-content {
@@ -17,7 +17,7 @@
     border-radius: 10px;
     max-width: 500px;
     width: 100%;
-    z-index: 1001; /* Asegura que el contenido del diálogo esté encima del fondo */
+    z-index: 1001; 
   }
   
   .dialog-title {
@@ -52,7 +52,7 @@
   }
   
   .button-secondary {
-    background-color: #6c757d; /* Gris */
+    background-color: #6c757d; 
     color: white;
     border: none;
     padding: 10px 20px;
