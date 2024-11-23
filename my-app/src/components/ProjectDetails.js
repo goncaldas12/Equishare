@@ -7,17 +7,26 @@ const ProjectDetails = () => {
   const { projectId } = useParams();
   const [project, setProject] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const [isContributionDialogOpen, setIsContributionDialogOpen] = useState(false);
-  const [memberToRemove, setMemberToRemove] = useState(null);
   const [contributionType, setContributionType] = useState('APORTE');
   const [selectedMember, setSelectedMember] = useState('');
   const [selectedRecipient, setSelectedRecipient] = useState('');
   const [contributionDescription, setContributionDescription] = useState('');
   const [contributionAmount, setContributionAmount] = useState('');
   const [selectedImage, setSelectedImage] = useState(null); 
-  const [divisionType, setDivisionType] = useState('equitativo'); 
-  const [percentages, setPercentages] = useState({}); 
+  const [dropdownOpen, setDropdownOpen] = useState(false); // Control del dropdown
+  const [selectedMembers, setSelectedMembers] = useState([]); // Miembros seleccionados
+
+  const toggleMemberSelection = (member) => {
+    setSelectedMembers((prevSelected) =>
+      prevSelected.includes(member)
+        ? prevSelected.filter((m) => m !== member) // Remueve si ya está seleccionado
+        : [...prevSelected, member] // Agrega si no está seleccionado
+    );
+  };
+
+
+  
 
   
 
@@ -53,33 +62,6 @@ const ProjectDetails = () => {
       setProject(updatedProject);
       updateLocalStorageForAllUsers(updatedProject);
     }
-  };
-
-  const handleRemoveMember = (member) => {
-    if (member === currentUser) {
-      alert("No puedes eliminarte a ti mismo del proyecto.");
-      return;
-    }
-    setMemberToRemove(member);
-    setIsConfirmDialogOpen(true);
-  };
-
-  const confirmRemoveMember = () => {
-    if (project) {
-      const updatedProject = {
-        ...project,
-        members: project.members.filter(member => member !== memberToRemove),
-      };
-      setProject(updatedProject);
-      updateLocalStorageForAllUsers(updatedProject);
-    }
-    setIsConfirmDialogOpen(false);
-    setMemberToRemove(null);
-  };
-
-  const cancelRemoveMember = () => {
-    setIsConfirmDialogOpen(false);
-    setMemberToRemove(null);
   };
 
   const toggleDialog = () => {
@@ -176,53 +158,6 @@ const ProjectDetails = () => {
     setSelectedImage(null);
   };
   
-
-  const handlePercentageChange = (member, value) => {
-    const newPercentages = { ...percentages, [member]: value };
-    const totalPercentage = Object.values(newPercentages).reduce((sum, p) => sum + parseFloat(p || 0), 0);
-
-    if (totalPercentage <= 100) {
-      setPercentages(newPercentages);
-    } else {
-      alert("La suma de los porcentajes no puede exceder el 100%");
-    }
-  };
-
-  const calculateBalance = (total, members) => {
-    if (divisionType === 'equitativo') {
-      const average = total / members.length;
-      return members.map(member => {
-        const contribution = project.contributions[member] || 0;
-        const balance = contribution - average;
-        return {
-          member,
-          contribution,
-          balance
-        };
-      });
-    } else {
-      const remainingPercentage = 100 - Object.values(percentages).reduce((sum, p) => sum + parseFloat(p || 0), 0);
-      const unassignedMembers = members.filter(member => !percentages[member]);
-      const unassignedPercentage = remainingPercentage / unassignedMembers.length;
-
-      return members.map(member => {
-        const memberPercentage = percentages[member] || unassignedPercentage;
-        const memberShare = (total * memberPercentage) / 100;
-        const contribution = project.contributions[member] || 0;
-        const balance = contribution - memberShare;
-        return {
-          member,
-          contribution,
-          balance
-        };
-      });
-    }
-  };
-
-  const balanceData = project ? calculateBalance(project.total, project.members) : [];
-
-  const availableRecipients = project ? project.members.filter(member => member !== selectedMember) : [];
-
   const isContributionValid = () => {
     const amount = parseFloat(contributionAmount);
     if (!contributionDescription || isNaN(amount) || amount <= 0 || !selectedMember) return false;
@@ -254,51 +189,9 @@ const ProjectDetails = () => {
       
 
 
-    <div className="division-settings">
-    <label>Selecciona el tipo de división:</label>
-    <select value={divisionType} onChange={(e) => setDivisionType(e.target.value)}>
-      <option value="equitativo">División equitativa</option>
-      <option value="porcentajes">División por porcentajes</option>
-    </select>
-
-    {/* Campos para asignar porcentajes si se selecciona "porcentajes" */}
-    {divisionType === 'porcentajes' && (
-      <div className="percentage-inputs">
-        {project.members.map((member, index) => (
-          <div key={index} className="percentage-field">
-            <label>{member}</label>
-            <input
-              type="number"
-              value={percentages[member] || ''}
-              onChange={(e) => handlePercentageChange(member, e.target.value)}
-              min="0"
-              max="100"
-              className="percentage-input"
-            />%
-          </div>
-        ))}
-      </div>
-    )}
+  <div className="content-wrapper">
+    <ProjectHistory historial={project.historial} />
   </div>
-
-
-  
-
-    <div className="content-wrapper">
-      <div className="members-balance">
-        <h2 id="gol">Balance de integrantes</h2>
-        <ul>
-          {balanceData //aca se calcula lo que debe pagar cada uno
-            .filter(({ balance }) => balance !== 0)
-            .map(({ member, balance }, index) => (
-              <li key={index} className={balance > 0 ? 'positive-balance' : 'negative-balance'}>
-                {member}: {balance > 0 ? `Debe recibir $${balance}` : `Debe pagar $${Math.abs(balance)}`}
-              </li>
-            ))}
-        </ul>
-      </div>
-      <ProjectHistory historial={project.historial} />
-    </div>
 
       {/* Dialogo para mostrar los integrantes */}
       {isDialogOpen && (
@@ -309,9 +202,7 @@ const ProjectDetails = () => {
               {project.members.map((member, index) => (
                 <li className="member-item" key={index}>
                   {member}{" "}
-                  {member !== currentUser && (
-                    <button className="remove-member-btn" onClick={() => handleRemoveMember(member)}>Eliminar</button>
-                  )}
+                  {member !== currentUser}
                 </li>
               ))}
             </ul>
@@ -320,97 +211,117 @@ const ProjectDetails = () => {
           </div>
         </div>
       )}
-
-      {/* Confirmar eliminación */}
-      {isConfirmDialogOpen && (
-        <div className="dialog-overlay" onClick={closeDialogOnOutsideClick}>
-          <div className="dialog">
-            <h3>¿Estás seguro de que deseas eliminar a {memberToRemove} del proyecto?</h3>
-            <button className="color-confirm" onClick={confirmRemoveMember}>Sí</button>
-            <button className="color-cancel" onClick={cancelRemoveMember}>No</button>
-          </div>
-        </div>
-      )}
-
       {/* Dialogo para nueva contribución */}
       {isContributionDialogOpen && (
-        <div className="dialog-overlay" onClick={closeDialogOnOutsideClick}>
-          <div className="dialog">
-            <h2>Nueva Contribución</h2>
-            <label>Descripción:</label>
-            <input
-              type="text"
-              value={contributionDescription}
-              onChange={(e) => setContributionDescription(e.target.value)}
-            />
+  <div className="dialog-overlay" onClick={closeDialogOnOutsideClick}>
+    <div className="dialog">
+      <h2>Nueva Contribución</h2>
+      
+      {/* Selección de tipo de contribución */}
+      <div className="contribution-type">
+        <label>Tipo de contribución:</label>
+        <select
+          value={contributionType}
+          onChange={(e) => setContributionType(e.target.value)}
+        >
+          <option value="APORTE">Gasto (Aporte)</option>
+          <option value="SALDAR DEUDA">Saldar Deuda</option>
+        </select>
+      </div>
 
-            <label>Monto:</label>
-            <input
-              type="number"
-              value={contributionAmount}
-              onChange={(e) => setContributionAmount(e.target.value)}
-            />
+      {contributionType === "APORTE" && (
+  <form className="contribution-form">
+    <label>Monto:</label>
+    <input
+      type="number"
+      value={contributionAmount}
+      onChange={(e) => setContributionAmount(e.target.value)}
+    />
 
-            <label>Tipo de contribución:</label>
-            <select
-              value={contributionType}
-              onChange={(e) => setContributionType(e.target.value)}
-            >
-              <option value="APORTE">Aporte</option>
-              <option value="SALDAR DEUDA">Saldar deuda</option>
-            </select>
+    <label>Descripción:</label>
+    <input
+      type="text"
+      value={contributionDescription}
+      onChange={(e) => setContributionDescription(e.target.value)}
+    />
 
-            {contributionType === 'APORTE' && (
-              <>
-                <label>Miembro que aporta:</label>
-                <select
-                  value={selectedMember}
-                  onChange={(e) => setSelectedMember(e.target.value)}
-                >
-                  <option value="">Selecciona un miembro</option>
-                  {project.members.map((member, index) => (
-                    <option key={index} value={member}>{member}</option>
-                  ))}
-                </select>
-              </>
-            )}
+<label>Excluir miembros:</label>
+<div className="dropdown-container">
+  <button
+    type="button"
+    className="dropdown-toggle"
+    onClick={() => setDropdownOpen(!dropdownOpen)}
+  >
+    {selectedMembers.length > 0
+        ? selectedMembers.slice(0, 3).join(", ") +
+          (selectedMembers.length > 3 ? ` (+${selectedMembers.length - 3})` : "")
+        : "Seleccionar miembros a excluir"}
+  </button>
+  {dropdownOpen && (
+    <ul className="dropdown-menu scrollable">
+      {project.members
+        .filter((member) => member !== currentUser)
+        .sort() // Ordena alfabéticamente
+        .map((member, index) => (
+          <li
+            key={index}
+            className={`dropdown-item ${
+              selectedMembers.includes(member) ? "selected" : ""
+            }`}
+            onClick={() => toggleMemberSelection(member)}
+          >
+            {member}
+          </li>
+        ))}
+    </ul>
+  )}
+</div>
+    <label>Subir imagen:</label>
+    <input type="file" onChange={handleImageUpload} />
+  </form>
+)}
 
-            {contributionType === 'SALDAR DEUDA' && (
-              <>
-                <label>Miembro que paga la deuda:</label>
-                <select
-                  value={selectedMember}
-                  onChange={(e) => setSelectedMember(e.target.value)}
-                >
-                  <option value="">Selecciona un miembro</option>
-                  {project.members.map((member, index) => (
-                    <option key={index} value={member}>{member}</option>
-                  ))}
-                </select>
 
-                <label>Miembro que recibe el pago:</label>
-                <select
-                  value={selectedRecipient}
-                  onChange={(e) => setSelectedRecipient(e.target.value)}
-                >
-                  <option value="">Selecciona un miembro</option>
-                  {availableRecipients.map((member, index) => (
-                    <option key={index} value={member}>{member}</option>
-                  ))}
-                </select>
-              </>
-            )}
+      {contributionType === "SALDAR DEUDA" && (
+        <form className="contribution-form">
+          <label>Monto:</label>
+          <input
+            type="number"
+            value={contributionAmount}
+            onChange={(e) => setContributionAmount(e.target.value)}
+          />
 
-            <label>Selecciona una imagen (opcional):</label>
-            <input type="file" accept="image/*" onChange={handleImageUpload} />
-
-            <button onClick={handleAddContribution} disabled={!isContributionValid()}>
-              Añadir Contribución
-            </button>
-            <button className="close-dialog-btn" onClick={toggleContributionDialog}>Cancelar</button>
-          </div>
-        </div>
+          <label>Selecciona destinatario:</label>
+          <select
+            value={selectedRecipient}
+            onChange={(e) => setSelectedRecipient(e.target.value)}
+          >
+            <option value="">--Seleccionar--</option>
+            {project.members
+              .filter(member => member !== currentUser)
+              .map((member, index) => (
+                <option key={index} value={member}>
+                  {member}
+                </option>
+              ))}
+          </select>
+        </form>
       )}
+
+      <button
+        className="confirm-contribution-btn"
+        onClick={handleAddContribution}
+        disabled={!isContributionValid()}
+      >
+        Confirmar
+      </button>
+      <button className="close-dialog-btn" onClick={toggleContributionDialog}>
+        Cancelar
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

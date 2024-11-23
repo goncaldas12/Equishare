@@ -259,8 +259,81 @@ button {
   margin-left: -15px;
   margin-right: 15px;
 }
+.dropdown-container {
+  position: relative;
+  margin-top: 10px;
+}
+
+.dropdown-toggle {
+  width: 100%; /* Asegura que el botón sea igual al contenedor */
+  margin-left: 0px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-toggle::after {
+  content: "▼";
+  font-size: 12px;
+  margin-left: 10px;
+  color: #888;
+}
 
 
+
+.scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 5px;
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 5px); /* Ubica el dropdown justo debajo del botón */
+  width: 100%; /* Igual al ancho del botón */
+  max-height: 200px; /* Muestra hasta 7 elementos */
+  overflow-y: auto; /* Habilita scroll vertical */
+  border: 1px solid #ddd;
+  background-color: white;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+
+.dropdown-item {
+  padding: 8px 12px;
+  font-size: 14px;
+  overflow: visible; /* Permite que el contenido sea visible */
+  white-space: normal; /* Permite que el texto se divida en varias líneas */
+  text-overflow: ellipsis; /* Opcional, para textos largos */
+  cursor: pointer;
+}
+
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-item.selected {
+  background: #d4edda;
+  color: #155724;
+  font-weight: bold;
+}
 
 
 .division-settings {

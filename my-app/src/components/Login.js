@@ -1,55 +1,82 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Login.css'; 
+import login from '../api/login.api'; // Supongamos que tienes este servicio configurado
+import './Login.css';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleEmailChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const storedUsers = JSON.parse(localStorage.getItem('usuarios')) || [];
+    setError(null);
 
-    const user = storedUsers.find(u => (u.nombreUsuario === username || u.email === username) && u.contrasena === password);
+    // Llamar al endpoint de login en el backend
+    let response = await login(email, password);
 
-    if (user) {
-      // Guardar al usuario actual en localStorage
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      navigate('/home');  
+    if (response.status === 200) {
+      // Guardar el token de acceso en sessionStorage
+      sessionStorage.setItem('access-token', response.token);
+
+      // Redirigir al usuario a la página principal
+      navigate('/home');
     } else {
-      alert('Usuario o contraseña incorrectos');
+      setError(response.message || 'Error al iniciar sesión');
     }
   };
 
   return (
     <div className="login-container">
-      <div className="divv">
-        <h2>Iniciar Sesión</h2>
-      </div>
-      <form onSubmit={handleLogin} className="login-form">
-        <div className="form-group">
-          <label>Nombre de Usuario o Email:</label>
-          <input 
-            type="text" 
-            value={username} 
-            onChange={(e) => setUsername(e.target.value)} 
-            required 
-          />
+      <div className="login-form">
+        <div className="divv">
+          <h2>Iniciar Sesión</h2>
         </div>
-        <div className="form-group">
-          <label>Contraseña:</label>
-          <input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
-          />
-        </div>
-        <button type="submit" className="login-button">Iniciar Sesión</button>
-      </form>
-      <div className="extra-links">
-        <a href="/password-recovery">¿Olvidaste tu contraseña?</a>
+        <form onSubmit={handleLogin}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={handleEmailChange}
+              placeholder="usuario@ejemplo.com"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Contraseña</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={handlePasswordChange}
+              placeholder="********"
+              required
+            />
+          </div>
+          <div className="extra-links">
+            <a href="/password-recovery">¿Olvidaste tu contraseña?</a>
+          </div>
+          {error && (
+            <p className="text-red-700 font-bold text-center">{error}</p>
+          )}
+          <button type="submit" className="login-button">
+            Iniciar Sesión
+          </button>
+        </form>
       </div>
     </div>
   );
