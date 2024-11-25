@@ -1,0 +1,123 @@
+.navbar2 {
+  background-color: #fed244;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 50px;
+  padding-top: 15px;
+}
+
+.navbar-imagen {
+  width: 50px;
+  height: auto;
+  margin-left: 45px;
+}
+
+.d-grid2 {
+  margin-right: 45px;
+  margin-bottom: 10px;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  padding-left: 15px;
+  
+}
+
+.user-name {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.profile-image-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.dropdown-arrow {
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  right: 0; 
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 350px; 
+  z-index: 1000;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 13px;
+}
+
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.profile-image-large {
+  width: 60px; 
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.dropdown-name {
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown-email {
+  font-size: 14px;
+  color: gray;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown-item {
+  padding: 10px;
+  text-align: left;
+  border-top: 1px solid #ccc;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none; 
+  color: black; 
+  white-space: nowrap;  
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0; 
+}
+
+.dropdown-divider {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 5px 0;
+}
+
+.dropdown-menu-footer {
+  padding: 10px;
+  text-align: left;
+  border-top: 1px solid #ccc;
+  cursor: pointer;
+  font-size: 16px;
+}
