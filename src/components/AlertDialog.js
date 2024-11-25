@@ -2,7 +2,7 @@ import React from "react";
 import "./AlertDialog.css";
 
 const AlertDialog = ({ onConfirm, onCancel, isOpen }) => {
-  if (!isOpen) return null; // No renderiza nada si el diálogo no está abierto
+  if (!isOpen) return null; 
 
   return (
     <div className="alert-dialog-overlay">

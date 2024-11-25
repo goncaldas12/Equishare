@@ -101,4 +101,3 @@ const ExitAlert = ({ project, onExit, onEdit }) => {
 };
 
 export default ExitAlert;
-
